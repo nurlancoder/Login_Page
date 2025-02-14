@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up / Log In</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            animation: gradient 10s ease infinite;
+        }
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        .auth-container {
+            width: 400px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 0.6s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .tabs button {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            color: #6a11cb;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .tabs button.active {
+            color: #2575fc;
+            border-bottom: 2px solid #2575fc;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input {
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        input:focus {
+            border-color: #6a11cb;
+            box-shadow: 0 0 8px rgba(106, 17, 203, 0.2);
+        }
+        button[type="submit"] {
+            padding: 12px;
+            background-color: #6a11cb;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #2575fc;
+        }
+        p {
+            text-align: center;
+            margin: 20px 0;
+            color: #888;
+            font-size: 14px;
+        }
+        a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #e8f5e9;
+            border-radius: 8px;
+            color: #2e7d32;
+            font-size: 16px;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        @media (max-width: 768px) {
+            .auth-container {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="tabs">
+            <button id="signupTab" class="active">Sign Up</button>
+            <button id="loginTab">Log In</button>
+        </div>
+        <div id="signupFormContainer">
+            <h1>Create Account</h1>
+            <form id="signupForm">
+                <input type="text" placeholder="Enter your Username" required>
+                <input type="email" placeholder="Enter your Email" required>
+                <input type="password" placeholder="Enter your Password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p>Already have an account? <a href="#" id="switchToLogin">Log In</a></p>
+        </div>
+        <div id="loginFormContainer" style="display: none;">
+            <h1>Welcome Back</h1>
+            <form id="loginForm">
+                <input type="email" placeholder="Enter your Email" required>
+                <input type="password" placeholder="Enter your Password" required>
+                <button type="submit">Log In</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="switchToSignup">Sign Up</a></p>
+        </div>
+        <div id="successMessage" class="success-message">
+            Account created successfully!
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const signupTab = document.getElementById('signupTab');
+            const loginTab = document.getElementById('loginTab');
+            const signupFormContainer = document.getElementById('signupFormContainer');
+            const loginFormContainer = document.getElementById('loginFormContainer');
+            const switchToLogin = document.getElementById('switchToLogin');
+            const switchToSignup = document.getElementById('switchToSignup');
+            const successMessage = document.getElementById('successMessage');
+
+            signupTab.addEventListener('click', function () {
+                signupFormContainer.style.display = 'block';
+                loginFormContainer.style.display = 'none';
+                signupTab.classList.add('active');
+                loginTab.classList.remove('active');
+            });
+
+            loginTab.addEventListener('click', function () {
+                signupFormContainer.style.display = 'none';
+                loginFormContainer.style.display = 'block';
+                loginTab.classList.add('active');
+                signupTab.classList.remove('active');
+            });
+
+            switchToLogin.addEventListener('click', function (event) {
+                event.preventDefault();
+                signupFormContainer.style.display = 'none';
+                loginFormContainer.style.display = 'block';
+                loginTab.classList.add('active');
+                signupTab.classList.remove('active');
+            });
+
+            switchToSignup.addEventListener('click', function (event) {
+                event.preventDefault();
+                signupFormContainer.style.display = 'block';
+                loginFormContainer.style.display = 'none';
+                signupTab.classList.add('active');
+                loginTab.classList.remove('active');
+            });
+
+            document.getElementById('signupForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 3000);
+            });
+
+            document.getElementById('loginForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                alert('Logged in successfully!');
+            });
+        });
+    </script>
+</body>
+</html>
